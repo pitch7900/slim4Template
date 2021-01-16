@@ -1,0 +1,53 @@
+{% macro popup(level,message) %}
+	<div class=" alert alert-{{level}} alert-dismissible fade show" role="alert">
+		<strong>{{message}}</strong>
+		<button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+{% endmacro %}
+
+{% import _self as macro %}
+
+{% if notification.getMessage('primary') %}
+	{% for message in notification.getMessage('primary') %}
+		{{macro.popup('primary', message)}}
+	{% endfor %}
+{% endif  %}
+
+{% if notification.getMessage('success') %}
+	{% for message in notification.getMessage('success') %}
+		{{macro.popup('success',message)}}
+	{% endfor %}
+{% endif  %}
+
+{% if notification.getMessage('danger') %}
+	{% for message in notification.getMessage('danger') %}
+		{{macro.popup('danger',message)}}
+	{% endfor %}
+{% endif  %}
+
+{% if notification.getMessage('warning') %}
+	{% for message in notification.getMessage('warning') %}
+		{{macro.popup('warning',message)}}
+	{% endfor %}
+{% endif  %}
+
+{% if notification.getMessage('info') %}
+	{% for message in notification.getMessage('info') %}
+		{{macro.popup('info',message)}}
+	{% endfor %}
+{% endif  %}
+
+{% if notification.getMessage('light') %}
+	{% for message in notification.getMessage('light') %}
+		{{macro.popup('light',message)}}
+	{% endfor %}
+{% endif  %}
+
+{% if notification.getMessage('dark') %}
+	{% for message in notification.getMessage('dark') %}
+		{{macro.popup('dark',message)}}
+	{% endfor %}
+{% endif  %}
