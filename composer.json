@@ -25,7 +25,7 @@
         "mouf/utils.session.optimistic-session-handler": "^2.0",
         "symfony/polyfill-ctype": "^1.20",
         "slim/flash": "^0.4.0",
-        "symfony/var-dumper": "^5.2",
+        "symfony/var-dumper": "^5.2"
     },
     "config": {
         "preferred-install": "dist"
