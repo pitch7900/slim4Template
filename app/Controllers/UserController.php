@@ -19,7 +19,15 @@ class UserController extends AbstractTwigController
         $this->authentication = $container->get(Authentication::class);
     }
 
-
+    
+    /**
+     * postChangeDarkTheme
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
     public function postChangeDarkTheme(ServerRequest $request, ResponseInterface $response, $args)
     {
         $userid=intval($args['userid']);
@@ -28,7 +36,15 @@ class UserController extends AbstractTwigController
         $user->save();
         return $this->withJSON($response, ['darktheme' => Users::find(Authentication::CurrentUserID())->darktheme]);
     }
-
+    
+    /**
+     * getCurrentUserJsonData
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
     public function getCurrentUserJsonData(ServerRequest $request, ResponseInterface $response, $args)
     {
         $userinformations = array();
@@ -39,7 +55,15 @@ class UserController extends AbstractTwigController
         return $this->withJson($response, $userinformations);
     }
 
-
+    
+    /**
+     * deleteUser
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
     public function deleteUser(ServerRequest $request, ResponseInterface $response, $args)
     {
         $userid = intval($args['userid']);
@@ -50,7 +74,15 @@ class UserController extends AbstractTwigController
 
         return $this->withJSON($response, ['deleted' => true]);
     }
-
+    
+    /**
+     * postChangeCredentials
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
     public function postChangeCredentials(ServerRequest $request, ResponseInterface $response, $args)
     {
         $userid = intval($args['userid']);
@@ -75,7 +107,15 @@ class UserController extends AbstractTwigController
         }
         return $this->withRedirect($response, $_SERVER["HTTP_REFERER"], 303);
     }
-
+    
+    /**
+     * postAddUser
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
     public function postAddUser(ServerRequest $request, ResponseInterface $response, $args)
     {
 
@@ -124,14 +164,30 @@ class UserController extends AbstractTwigController
 
 
 
-
+    
+    /**
+     * getCreateUserInterface
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
     public function getCreateUserInterface(ServerRequest $request, ResponseInterface $response, $args)
     {
         return $this->render($response, 'user/add.twig');
     }
 
-
-    public function getAllUsers(ServerRequest $request, ResponseInterface $response, $args)
+    
+    /**
+     * getAllUsers
+     *
+     * @param  mixed $request
+     * @param  mixed $response
+     * @param  mixed $args
+     * @return void
+     */
+    public function getAllUsersInterface(ServerRequest $request, ResponseInterface $response, $args)
     {
         return $this->render($response, 'user/all.twig');
     }

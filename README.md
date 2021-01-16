@@ -8,6 +8,15 @@ Features :
 - Use of FontAwesome
 - Darktheme managemnt possible per user
 - Basic user management
+- Multilanguage support
+- TwigFunctions (definted in container-twigextensions.php)
+- Routes (defined in /bootstrap/routes.php)
+
+## Requirement
+
+- Php 7.4
+- mysql
+- apache 2 server
 
 ## Databases queries
 

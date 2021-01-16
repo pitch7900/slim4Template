@@ -44,7 +44,7 @@ return [
             ]
         );
         $twig->addExtension(new \Twig\Extension\DebugExtension());
-        require_once __DIR__.'/container-twigextentions.php';
+        require_once __DIR__.'/container-twigextensions.php';
         
         return $twig;
     },

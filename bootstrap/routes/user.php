@@ -12,7 +12,7 @@ return function (App $app) {
      * User's calls
      */
     $app->group('/user', function (RouteCollectorProxy $group) {
-        $group->get('/all.html', UserController::class . ':getAllUsers')
+        $group->get('/all.html', UserController::class . ':getAllUsersInterface')
             ->setName('user.getAllUsers');
         $group->get('/add.html', UserController::class . ':getCreateUserInterface')
             ->setName('user.get.add');
