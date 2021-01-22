@@ -50,8 +50,7 @@ class UserController extends AbstractTwigController
         $userinformations = array();
 
         $userinformations["userid"] = Authentication::CurrentUserID();
-        $userinformations["username"] = Authentication::CurrentUserName();;
-        $userinformations["userroleid"] = Authentication::CurrentUserRoleId();
+        $userinformations["username"] = Authentication::CurrentUserName();
         return $this->withJson($response, $userinformations);
     }
 
@@ -90,7 +89,7 @@ class UserController extends AbstractTwigController
         $login = $request->getParsedBody()['login'];
         $user = Users::find($userid);
 
-        if (Authentication::isAdministrator() || Authentication::CurrentUserID() == $userid) {
+        if (Authentication::CurrentUserID() == $userid) {
             //is login already used by someone else
             if (is_null(Users::where('login', 'like', $login)
                 ->where('id', '!=', $userid)->first())) {
