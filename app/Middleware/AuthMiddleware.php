@@ -2,29 +2,26 @@
 
 namespace App\Middleware;
 
-
-use \Psr\Http\Message\ServerRequestInterface;
-use \Psr\Http\Message\ResponseInterface;
-use Slim\Psr7\Factory\ResponseFactory;
-use Psr\Http\Server\RequestHandlerInterface;
 use Slim\App;
 use App\Authentication\Authentication;
-use Psr\Log\LoggerInterface;
+use Slim\Psr7\Factory\ResponseFactory;
+use App\Controllers\AbstractController;
+use \Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use \Psr\Http\Message\ServerRequestInterface;
+
 /**
  * Description of AuthMiddleware
  *
  * @author pierre
  */
-class AuthMiddleware
+class AuthMiddleware extends AbstractController
 {
     /**
      * Logger interface
      * @var LoggerInterface;
      */
-    private $logger;
-
-    private $container;
-
+    
     private $app;
 
 
@@ -34,10 +31,11 @@ class AuthMiddleware
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->container = $this->app->getContainer();
-        $this->auth = $this->container->get(Authentication::class);
-        $this->logger = $this->container->get(LoggerInterface::class);
+        $container = $this->app->getContainer();
+        $this->auth = $container->get(Authentication::class);
+    
 
+        parent::__construct($container);
     }
     /**
      * getLoginPath : Return the login path
@@ -57,8 +55,7 @@ class AuthMiddleware
         if (!Authentication::IsAuthentified()) {
             $responseFactory = new ResponseFactory();
             $response = $responseFactory->createResponse();
-            return $response->withHeader('Location',  $this->getLoginPath())
-                ->withStatus(303);
+            return $this->withRedirect($response,$this->getLoginPath(),303);
         }
 
         $response = $handler->handle($request);
