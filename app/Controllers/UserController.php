@@ -69,8 +69,7 @@ class UserController extends AbstractTwigController
 
         $user = Users::find($userid);
         $user->forceDelete();
-        $user->save();
-
+    
         return $this->withJSON($response, ['deleted' => true]);
     }
     
@@ -127,7 +126,7 @@ class UserController extends AbstractTwigController
         if (is_null(Users::where('login', 'like', $login)->first())) {
             $user = Users::Create([
                 'firstname' => $firstname,
-                'lastanme' => $lastname,
+                'lastname' => $lastname,
                 'login' => $login,
                 'password' => $password,
 

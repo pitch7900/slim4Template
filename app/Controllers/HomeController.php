@@ -16,7 +16,7 @@ class HomeController extends AbstractTwigController
     }
 
     /**
-     * Return the "Home" view aka. "Recents"
+     * Return the "Home" view
      * @param Request $request
      * @param Response $response
      * @return HTML

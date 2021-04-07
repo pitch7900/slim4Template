@@ -31,9 +31,16 @@
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_changecredentials_{{id}}">
 					{{ getText('Change credentials') }}
 				</button>
+				{% if darkmode %} 
+				{% set darkmodestatus="checked" %}
+				{% endif %}
 				<div class="form-check form-switch">
-					<input class="form-check-input" type="checkbox" id="darkmode" onchange="change_user_darkmode({{id}});" {% if darkmode %} checked {% endif %}>
-					<label class="form-check-label" for="flexSwitchCheckDefault">{{ getText('Dark mode') }}</label>
+					<input class="form-check-input" 
+					type="checkbox" id="darkmode_{{id}}" 
+					onchange="change_user_darkmode({{id}});" 
+					{{darkmodestatus}} 
+					>
+					<label class="form-check-label" for="darkmode_{{id}}">{{ getText('Dark mode') }}</label>
 				</div>
 
 
