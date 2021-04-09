@@ -21,7 +21,6 @@ class Users extends AbstractModel
         'darktheme'
     ];
 
-
     /**
      * isDarkTheme - Tell if dark Theme is enabled for current user. Default is false
      *
@@ -38,7 +37,7 @@ class Users extends AbstractModel
 
 
     /**
-     * getUserName - reutrn user's id name properly formated for display
+     * getUserName - return user's id name properly formated for display
      *
      * @param  mixed $id
      * @return void

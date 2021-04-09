@@ -23,7 +23,8 @@ return [
     $twig->getEnvironment()->addGlobal('user', [
         'username' => Authentication::CurrentUserName(),
         'getuserid' => Authentication::CurrentUserID(),
-        'darktheme' => Users::isDarkTheme()
+        'darktheme' => Users::isDarkTheme(),
+        
     ]),
     $twig->getEnvironment()->addGlobal('users', [
         'getlist' => Users::select('id','login','password','firstname', 'lastname','darktheme')
