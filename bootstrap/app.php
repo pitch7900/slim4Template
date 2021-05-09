@@ -3,11 +3,9 @@
 
 use Dotenv\Dotenv;
 use App\ContainerFactory;
-use App\Database\Settings;
 use Slim\Factory\AppFactory;
-use App\Utils\UpgradeDBHelper;
 use Dotenv\Exception\InvalidPathException;
-use Mouf\Utils\Session\SessionHandler\OptimisticSessionHandler;
+use Pitch7900\SessionsHandler\DBSessionsHandler;
 
 
 $currentdbversion = 4;
@@ -30,21 +28,13 @@ try {
 require_once __DIR__ . '/database.php';
 
 session_cache_limiter('public');
-
 ini_set("session.cookie_httponly", 1);
-session_name('CFID');
-//If optimisticsessionhandlers is set, then use it.
-if (isset($_ENV['OPTIMISTICSESSIONSHANDLER'])) {
-    if (boolval($_ENV['OPTIMISTICSESSIONSHANDLER'])) {
-        $sessionhandler = new OptimisticSessionHandler();
-        session_set_save_handler($sessionhandler, true);
-        session_start(['read_and_close' => true]);
-    } else {
-        session_start();
-    }
-} else {
-    session_start();
-}
+session_name('APPS_SESSID');
+
+//Use a custom SessionHandler Based on database.
+$handler = new DBSessionsHandler(3600,'user',$rootPath."/logs/sessions.log",false);
+session_set_save_handler($handler, true);
+session_start();
 
 // Create the container for dependency injection.
 try {
