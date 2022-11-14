@@ -6,15 +6,16 @@
         
    
         <div class="container-fluid">
+        {{ dump(users.getList) }}
             <h1>{{ getText('Users management') }}{{macrouser.adduser()}}</h1>
             <div class="row">
         
-                {% for user in users.getlist%}
+                {% for user in users.getList %}
                     {{macrouser.user(user)}}
                 {% endfor %}
                 
             </div>
-            {{ dump(user) }}
+            
         </div>
 
    

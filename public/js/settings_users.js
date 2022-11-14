@@ -5,18 +5,10 @@
  */
 var delete_user = function (userid) {
     $.delete(`/user/${userid}`, function () {
-        $(`#accordionuser${userid}`).remove();
+        $(`#user_${userid}`).remove();
     });
 }
-/**
- * Change user's role
- * @param {type} userid
- * @param {type} roleid
- * @returns {undefined}
- */
-var change_role = function (userid, roleid) {
-    $.post(`/user/changerole/${userid}`, { roleid: roleid });
-}
+
 
 var change_user_darkmode = function (userid) {
     $.post(`/user/${userid}/darktheme`, function (jsondata) {

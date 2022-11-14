@@ -1,9 +1,8 @@
 {#Return a card for a user#}
 {% macro user(userobj) %}
-   
+
     {% import _self as macrosuser %}
     {{ macrosuser.modal_change_password(userobj.id,userobj.login) }}
-    {{ macrosuser.modal_show_user_cert(userobj.id,userobj.firstname , userobj.lastname, userobj.certificate) }}
 
 
     <tr id="user_{{ userobj.id }}">
@@ -14,109 +13,108 @@
         <td>{{ userobj.login }}</td>
         <td>
             {% if userobj.password is null %}
-
-                <i class="fa-solid fa-ban red"></i>
-
+                {{ getText('No') }}
             {% else %}
-                <i class="fa-solid fa-check green"></i>
+                {{ getText('Yes') }}
             {% endif %}
         </td>
-
+        {# Change Password #}
+        <td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_changecredentials_{{ userobj.id }}">
+                {{ getText('Change credentials') }}
+            </button>
+        </td>
 
         <td>
             {% if (userobj.darktheme=="1") %}
                 {% set darktheme="checked" %}
             {% endif %}
             <div class="form-check ">
-                <input type="checkbox" class="form-check-input" id="darktheme_{{ userobj.id }}" autocomplete="off" onchange="change_adult_content({{ userobj.id }});" {{ adulcontent_desired }}></div>
-		</td>
-   
-                
-            
-
-		<td>
-			{% if userobj.id != user.getuserid %}
-				<button id="removeuser_{{ userobj.id }}" type="button" class="btn btn-danger" aria-label="Close" onclick="delete_user({{ userobj.id }});">
-					<i class="fas fa-trash"></i>
-
-				</button>
-			{% endif %}
-		</td>
-
-	</tr>
+                <input type="checkbox" class="form-check-input" id="darktheme_{{ userobj.id }}" autocomplete="off" onchange="change_user_darkmode({{ userobj.id }});" {{ darktheme }}></div>
+            </td>
 
 
-{% endmacro %}
+            <td>
+                {% if userobj.id != user.getuserid %}
+                    <button id="removeuser_{{ userobj.id }}" type="button" class="btn btn-danger" aria-label="Close" onclick="delete_user({{ userobj.id }});">
+                        {{ getText('Delete') }}
+                    </button>
+                {% endif %}
+            </td>
 
-{#adduser#}
-{% macro adduser() %}
-	<a href="/user/add.html">
-		<span style="font-size: 24px; color: lightgrey;">
-			<i class="fas fa-plus-circle"></i>
-		</span>
-	</a>
+        </tr>
 
-{% endmacro %}
 
-{% macro passwordfield(userid) %}
-	<div class="form-group row">
-		<label for="password" class="col-sm-4 col-form-label">{{getText('Password')}}</label>
-		<div class="col-sm-8">
-			<div class="input-group password-strength__input">
+    {% endmacro %}
 
-				<input id="password_{{userid}}" type="password" name="password" class="form-control" placeholder="" autocomplete="current-password">
-				<button class="password-strength__visibility btn btn-secondary" type="button">
-					<span class="password-strength__visibility-icon invisible" data-visible="hidden">
-						<i class="fas fa-eye-slash"></i>
-					</span>
-					<span class="password-strength__visibility-icon " data-visible="visible">
-						<i class="fas fa-eye"></i>
-					</span>
-				</button>
-			</div>
-		</div>
-	</div>
-	<div class="password-strength__bar-block progress mb-4">
-		<div class="password-strength__bar progress-bar bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-	</div>
-	<div class="form-group row">
-		<label for="confirm_password" class="col-sm-4 col-form-label">{{getText('Confirm Password')}}</label>
-		<div class="col-sm-8">
-			<input id="confirm_password_{{userid}}" type="password" name="confirm_password" placeholder="" class="form-control" autocomplete="current-password">
-			<div class="invalid-feedback">
-				{{ getText('Password Missmatch') }}
-			</div>
-		</div>
-	</div>
-{% endmacro %}
+    {#adduser#}
+    {% macro adduser() %}
+        <a href="/user/add.html">
+            <span style="font-size: 24px; color: lightgrey;">
+                <i class="fas fa-plus-circle"></i>
+            </span>
+        </a>
 
-{% macro modal_change_password(id,login) %}
-	{% import _self as macrosuser %}
-	<div class="modal fade" id="modal_changecredentials_{{id}}" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">{{ getText('Set Credentials')}}</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body mx-auto">
-					<form action="/user/setcredentials/{{id}}" method="post">
-						<div class="form-group row">
-							<label for="login_{{id}}" class="col-sm-4 col-form-label">{{ getText('Login')}}</label>
-							<div class="col-sm-8">
-								<input id="login_{{id}}" type="text" name="login" class="form-control" placeholder="" value="{{login}}" autocomplete="username">
-							</div>
-						</div>
-						{{ macrosuser.passwordfield(id) }}
+    {% endmacro %}
 
-						<input type="submit" class="btn btn-primary" value="Submit">
+    {% macro passwordfield(userid) %}
+        <div class="form-group row">
+            <label for="password" class="col-sm-4 col-form-label">{{ getText('Password') }}</label>
+            <div class="col-sm-8">
+                <div class="input-group password-strength__input">
 
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ getText('Close')}}</button>
+                    <input id="password_{{ userid }}" type="password" name="password" class="form-control" placeholder="" autocomplete="current-password">
+                        <button class="password-strength__visibility btn btn-secondary" type="button">
+                            <span class="password-strength__visibility-icon invisible" data-visible="hidden">
+                                <i class="fas fa-eye-slash"></i>
+                            </span>
+                            <span class="password-strength__visibility-icon " data-visible="visible">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="password-strength__bar-block progress mb-4">
+                <div class="password-strength__bar progress-bar bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="form-group row">
+                <label for="confirm_password" class="col-sm-4 col-form-label">{{ getText('Confirm Password') }}</label>
+                <div class="col-sm-8">
+                    <input id="confirm_password_{{ userid }}" type="password" name="confirm_password" placeholder="" class="form-control" autocomplete="current-password">
+                        <div class="invalid-feedback">
+                            {{ getText('Password Missmatch') }}
+                        </div>
+                    </div>
+                </div>
+            {% endmacro %}
 
-					</form>
-				</div>
+            {% macro modal_change_password(id,login) %}
+                {% import _self as macrosuser %}
+                <div class="modal fade" id="modal_changecredentials_{{ id }}" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ getText('Set Credentials') }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <form action="/user/setcredentials/{{ id }}" method="post">
+                                    <div class="form-group row">
+                                        <label for="login_{{ id }}" class="col-sm-4 col-form-label">{{ getText('Login') }}</label>
+                                        <div class="col-sm-8">
+                                            <input id="login_{{ id }}" type="text" name="login" class="form-control" placeholder="" value="{{ login }}" autocomplete="username"></div>
+                                        </div>
+                                        {{ macrosuser.passwordfield(id) }}
 
-			</div>
-		</div>
-	</div>
-{% endmacro %}
+                                        <input type="submit" class="btn btn-primary" value="Submit">
+
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ getText('Close') }}</button>
+
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endmacro %}

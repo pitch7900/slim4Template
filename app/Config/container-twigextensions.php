@@ -27,7 +27,7 @@ return [
         
     ]),
     $twig->getEnvironment()->addGlobal('users', [
-        'getlist' => Users::select('id','login','password','firstname', 'lastname','darktheme')
+        'getList' => Users::select('id','login','password','firstname', 'lastname','darktheme')
             ->get()
             ->toArray()
     ]),

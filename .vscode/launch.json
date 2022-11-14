@@ -5,14 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Listen for XDebug",
+            "name": "Listen for XDebug Remote",
             "type": "php",
             "request": "launch",
             "port": 9000,
-            // "log": true,
-            //  "pathMappings": {
-            //      "/var/www/ebooks": "${workspaceFolder}"
-            // },
+            "log": true,
+             "pathMappings": {
+                 "/var/www/ebooks-dev": "${workspaceFolder}"
+            },
+        },
+        {
+            "name": "Listen for XDebug Local",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "log": true
         },
         {
             "name": "Launch currently open script",
