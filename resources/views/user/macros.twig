@@ -1,63 +1,51 @@
 {#Return a card for a user#}
-{% macro user(id,firstname,lastname,login,password,darkmode) %}
-	{% if id != user.getuserid %}
-		{% set background = "background-secondary" %}
-
-	{% else %}
-		{% set background = "background-elevation" %}
-		{% set current_user_text = " *" %}
-	{% endif %}
-	{% import _self as macrosuser %}
-	{{macrosuser.modal_change_password(id,login)}}
-	<div class="col-sm-12 col-md-4 col-lg-3" id="accordionuser{{id}}">
-
-		<div class="card">
-			<div class="card-header {{background}}">
-				<h5 class="my-0 font-weight-normal">{{firstname}}
-					{{lastname}}
-					{{current_user_text}}
-				</h5>
+{% macro user(userobj) %}
+   
+    {% import _self as macrosuser %}
+    {{ macrosuser.modal_change_password(userobj.id,userobj.login) }}
+    {{ macrosuser.modal_show_user_cert(userobj.id,userobj.firstname , userobj.lastname, userobj.certificate) }}
 
 
-			</div>
-			<div class="card-body">
-				<h6>{{ getText('Login') }}:
-					{{login}}</h6>
-				{% if password is null %}
-					<h6>{{ getText('Password not set') }}</h6>
-				{% endif %}
+    <tr id="user_{{ userobj.id }}">
+        <th scope="row">{{ userobj.id }}</th>
+        <td>{{ userobj.firstname }}
+            {{ userobj.lastname }}
+            {{ current_user_text }}</td>
+        <td>{{ userobj.login }}</td>
+        <td>
+            {% if userobj.password is null %}
+
+                <i class="fa-solid fa-ban red"></i>
+
+            {% else %}
+                <i class="fa-solid fa-check green"></i>
+            {% endif %}
+        </td>
 
 
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_changecredentials_{{id}}">
-					{{ getText('Change credentials') }}
+        <td>
+            {% if (userobj.darktheme=="1") %}
+                {% set darktheme="checked" %}
+            {% endif %}
+            <div class="form-check ">
+                <input type="checkbox" class="form-check-input" id="darktheme_{{ userobj.id }}" autocomplete="off" onchange="change_adult_content({{ userobj.id }});" {{ adulcontent_desired }}></div>
+		</td>
+   
+                
+            
+
+		<td>
+			{% if userobj.id != user.getuserid %}
+				<button id="removeuser_{{ userobj.id }}" type="button" class="btn btn-danger" aria-label="Close" onclick="delete_user({{ userobj.id }});">
+					<i class="fas fa-trash"></i>
+
 				</button>
-				{% if darkmode %} 
-				{% set darkmodestatus="checked" %}
-				{% endif %}
-				<div class="form-check form-switch">
-					<input class="form-check-input" 
-					type="checkbox" id="darkmode_{{id}}" 
-					onchange="change_user_darkmode({{id}});" 
-					{{darkmodestatus}} 
-					>
-					<label class="form-check-label" for="darkmode_{{id}}">{{ getText('Dark mode') }}</label>
-				</div>
+			{% endif %}
+		</td>
+
+	</tr>
 
 
-				{#Can't delete yourself#}
-				{% if id != user.getuserid %}
-					<button id="removeuser_{{id}}" type="button" class="btn btn-danger" aria-label="Close" onclick="delete_user({{id}});">
-						<i class="fas fa-trash"></i>
-						{{getText('Delete')}}
-					</button>
-				{% endif %}
-
-
-			</div>
-
-
-		</div>
-	</div>
 {% endmacro %}
 
 {#adduser#}

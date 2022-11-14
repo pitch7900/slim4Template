@@ -9,13 +9,12 @@
             <h1>{{ getText('Users management') }}{{macrouser.adduser()}}</h1>
             <div class="row">
         
-                
                 {% for user in users.getlist%}
-                    {{macrouser.user(user.id,user.firstname,user.lastname,user.cn,user.certificate,user.role,user.allow_adult_content,user.userwants_adult_content,get_user_lastseen(user.id),user.login,user.password)}}
+                    {{macrouser.user(user)}}
                 {% endfor %}
                 
             </div>
-            
+            {{ dump(user) }}
         </div>
 
    

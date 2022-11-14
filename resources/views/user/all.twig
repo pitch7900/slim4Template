@@ -2,7 +2,7 @@
 {% import "user/macros.twig" as macrouser %}
 {% block menu %}{{ include('menu.twig') }}{% endblock %}
 {% block content %}
-        <div class="container-fluid">
+        {# <div class="container-fluid">
             <h1>{{ getText('Users Management') }}{{macrouser.adduser()}}</h1>
             <div class="row">          
                 {% for user in users.getlist%}
@@ -12,9 +12,36 @@
                 
             </div>
             
-        </div>
+        </div> #}
         
-       
+       <div class="container-fluid">
+			<h1>{{ getText('Users Management') }}{{macrouser.adduser()}}</h1>
+			<div class="row">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+                            <th scope="col">{{getText('Firstname') }} {{getText('Lastname') }}</th>
+                            <th scope="col">{{getText('Login') }}</th>
+                            <th scope="col">{{getText('Use Password')}}</th>
+                            <th scope="col">{{getText('Change credentials')}}</th>
+                            <th scope="col">{{getText('Dark mode')}}</th>
+                            <th scope="col">{{getText('Delete')}}</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+
+						{% for user in users.getList%}
+							{# {{macrouser.user(user.id,user.firstname,user.lastname,user.cn,user.certificate,user.role,user.allow_adult_content,user.userwants_adult_content,get_user_lastseen(user.id),user.login,user.password)}} #}
+							{{macrouser.user(user)}}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+
 {% endblock %}
 
 {% block javacripts %}
